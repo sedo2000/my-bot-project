@@ -1,23 +1,6 @@
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>حالة البوت</title>
-    <style>
-        /* إضافة لمسة جمالية سريعة */
-        body { font-family: sans-serif; text-align: center; padding: 50px; background-color: #f4f4f9; }
-        .status-card { background: white; padding: 20  px; border-radius: 10px; shadow: 0 4px 6px rgba(0,0,0,0.1); }
-        .online { color: #28a745; font-weight: bold; }
-    </style>
-</head>
-<body>
-    <div class="status-card">
-        <h1>البوت يعمل بنجاح! 🚀</h1>
-        <p>الحالة الآن: <span class="online">متصل (Online)</span></p>
-        <hr>
-        <p>إذا واجهت مشكلة، يمكنك مراسلتنا عبر التليجرام.</p>
-        <a href="https://t.me/YourBotUsername" style="text-decoration:none; color:#0088cc;">إفتح البوت في تليجرام</a>
-    </div>
-</body>
-</html>
+@app.route('/')
+def home():
+    try:
+        return send_from_directory(BASE_DIR, 'index.html')
+    except:
+        return "<h1>البوت يعمل!</h1><p>ملف HTML غير موجود في مجلد api</p>"
