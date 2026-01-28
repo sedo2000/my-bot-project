@@ -1,6 +1,11 @@
-@app.route('/')
-def home():
-    try:
-        return send_from_directory(BASE_DIR, 'index.html')
-    except:
-        return "<h1>البوت يعمل!</h1><p>ملف HTML غير موجود في مجلد api</p>"
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <title>حالة البوت</title>
+</head>
+<body style="text-align:center; padding-top:50px; font-family:sans-serif;">
+    <h1>🚀 البوت متصل الآن</h1>
+    <p>بإمكانك مراسلته عبر التليجرام وسيقوم بالرد عليك فوراً.</p>
+</body>
+</html>
