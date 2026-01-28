@@ -6,17 +6,19 @@ TOKEN = os.getenv('TELEGRAM_BOT_TOKEN')
 bot = telebot.TeleBot(TOKEN)
 app = Flask(__name__)
 
-# الحصول على المسار الصحيح للمجلد الحالي
+# تحديد مسار المجلد الحالي بدقة
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
-# 1. لعرض ملف الـ HTML عند فتح الرابط
 @app.route('/')
-def index():
-    return send_from_directory(BASE_DIR, 'index.html')
+def home():
+    # محاولة عرض الملف، وإذا فشل يعطي رسالة واضحة بدلاً من الانهيار
+    try:
+        return send_from_directory(BASE_DIR, 'index.html')
+    except:
+        return "تم تشغيل المحرك، لكن ملف index.html غير موجود في مجلد api/"
 
-# 2. لمعالجة رسائل تليجرام (الويب هوك)
 @app.route('/', methods=['POST'])
-def webhook():
+def telegram_webhook():
     if request.headers.get('content-type') == 'application/json':
         json_string = request.get_data().decode('utf-8')
         update = telebot.types.Update.de_json(json_string)
@@ -24,7 +26,4 @@ def webhook():
         return "OK", 200
     return "Forbidden", 403
 
-# مثال بسيط لأمر يعمل في البوت
-@bot.message_handler(commands=['start'])
-def start(message):
-    bot.reply_to(message, "أهلاً! أنا أعمل الآن من Vercel.")
+# تأكد من عدم وجود bot.polling() في نهاية الملف
