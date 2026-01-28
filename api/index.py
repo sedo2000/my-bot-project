@@ -2,22 +2,19 @@ import os
 import telebot
 from flask import Flask, request, send_from_directory
 
-# إعدادات البوت
 TOKEN = os.getenv('TELEGRAM_BOT_TOKEN')
 bot = telebot.TeleBot(TOKEN)
 app = Flask(__name__)
 
-# الحصول على المسار الحالي للمجلد
+# الحصول على المسار الصحيح للمجلد الحالي
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
+# 1. لعرض ملف الـ HTML عند فتح الرابط
 @app.route('/')
 def index():
-    # التأكد من إرسال ملف index.html الخاص بك
-    try:
-        return send_from_directory(BASE_DIR, 'index.html')
-    except Exception as e:
-        return f"File index.html not found! Error: {str(e)}", 404
+    return send_from_directory(BASE_DIR, 'index.html')
 
+# 2. لمعالجة رسائل تليجرام (الويب هوك)
 @app.route('/', methods=['POST'])
 def webhook():
     if request.headers.get('content-type') == 'application/json':
@@ -27,7 +24,7 @@ def webhook():
         return "OK", 200
     return "Forbidden", 403
 
-# أضف أوامر البوت هنا
+# مثال بسيط لأمر يعمل في البوت
 @bot.message_handler(commands=['start'])
-def send_welcome(message):
-    bot.reply_to(message, "تم تفعيل البوت بنجاح!")
+def start(message):
+    bot.reply_to(message, "أهلاً! أنا أعمل الآن من Vercel.")
